@@ -1,0 +1,32 @@
+[project]
+name = "polymathes"
+version = "0.1.0"
+description = "Schema Validator for Python"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pytest==8.3.5",
+]
+
+[tool.pytest.ini_options]
+pythonpath = [
+    "src"
+]
+
+[tool.ruff]
+indent-width = 4
+line-length = 120
+output-format = "grouped"
+
+[tool.ruff.analyze]
+detect-string-imports = true
+
+[tool.ruff.format]
+indent-style = "space"
+line-ending = "lf"
+quote-style = "double"
+docstring-code-format = true
+skip-magic-trailing-comma = false
