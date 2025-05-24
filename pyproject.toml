@@ -3,12 +3,19 @@ name = "polymathes"
 version = "0.1.0"
 description = "Schema Validator for Python"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = [
     "pytest==8.3.5",
+]
+build = [
+    "hatchling==1.27.0"
 ]
 
 [tool.pytest.ini_options]
@@ -30,3 +37,19 @@ line-ending = "lf"
 quote-style = "double"
 docstring-code-format = true
 skip-magic-trailing-comma = false
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+]
