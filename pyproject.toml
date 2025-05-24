@@ -3,6 +3,9 @@ name = "polymathes"
 version = "0.1.0"
 description = "Schema Validator for Python"
 readme = "README.md"
+authors = [
+    { name = "Dhiego Cassiano Fogaça Barbosa", email = "modscleo4@outlook.com" }
+]
 requires-python = ">=3.11"
 dependencies = []
 
