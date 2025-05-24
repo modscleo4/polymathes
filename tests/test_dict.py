@@ -5,11 +5,7 @@ from polymathes.models import BaseModel
 
 
 class SampleModel(BaseModel):
-    value: tuple[int, float, str]
-
-
-class SampleEllipsisModel(BaseModel):
-    value: tuple[int, ...]
+    value: dict[str, int]
 
 
 def test_value_str() -> None:
@@ -48,25 +44,14 @@ def test_value_list() -> None:
 
 
 def test_value_tuple() -> None:
-    assert SampleModel(value=(1, 2, 3)).value == (1, 2.0, "3")
-
-
-def test_value_tuple_wrong() -> None:
     with pytest.raises(ValidationError):
-        SampleModel(value=(1, 2, 3, 4))
-
-
-def test_value_tuple_ellipsis() -> None:
-    assert SampleEllipsisModel(value=(1,)).value == (1,)
-    assert SampleEllipsisModel(value=(1, 2)).value == (1, 2)
-    assert SampleEllipsisModel(value=(1, 2, 3)).value == (1, 2, 3)
-
-
-def test_value_tuple_ellipsis_wrong() -> None:
-    with pytest.raises(ValidationError):
-        SampleEllipsisModel(value=("a",))
+        SampleModel(value=(1, 2, 3))
 
 
 def test_value_dict() -> None:
+    assert SampleModel(value={"a": 1, "b": 2, "c": 3}).value == {"a": 1, "b": 2, "c": 3}
+
+
+def test_value_dict_wrong() -> None:
     with pytest.raises(ValidationError):
-        SampleModel(value={"a": 1, "b": 2, "c": 3})
+        SampleModel(value={1: "a", 2: "b", 3: "c"})

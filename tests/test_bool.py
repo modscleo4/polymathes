@@ -12,27 +12,31 @@ def test_value_str() -> None:
     with pytest.raises(ValidationError):
         SampleModel(value="")
 
-    assert SampleModel(value="1").value == True
+    assert SampleModel(value="1").value is True
+    assert SampleModel(value="true").value is True
 
 
 def test_value_int() -> None:
-    assert SampleModel(value=1).value == True
+    assert SampleModel(value=1).value is True
+    assert SampleModel(value=0).value is False
 
 
 def test_value_float() -> None:
-    assert SampleModel(value=1.0).value == True
+    assert SampleModel(value=1.0).value is True
+    assert SampleModel(value=0.0).value is False
 
 
 def test_value_bool() -> None:
-    assert SampleModel(value=True).value == True
-    assert SampleModel(value=False).value == False
+    assert SampleModel(value=True).value is True
+    assert SampleModel(value=False).value is False
 
 
 def test_value_bytes() -> None:
     with pytest.raises(ValidationError):
         SampleModel(value=b"a")
 
-    assert SampleModel(value=b"1").value == True
+    assert SampleModel(value=b"1").value is True
+    assert SampleModel(value=b"0").value is False
 
 
 def test_value_none() -> None:

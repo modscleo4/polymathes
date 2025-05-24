@@ -1,15 +1,22 @@
+from enum import StrEnum
+
 import pytest
 
 from polymathes.errors import ValidationError
 from polymathes.models import BaseModel
 
 
+class SampleEnum(StrEnum):
+    A = "a"
+    B = "b"
+
+
+class SampleWrongEnum(StrEnum):
+    A = "a"
+
+
 class SampleModel(BaseModel):
-    value: tuple[int, float, str]
-
-
-class SampleEllipsisModel(BaseModel):
-    value: tuple[int, ...]
+    value: SampleEnum
 
 
 def test_value_str() -> None:
@@ -47,26 +54,34 @@ def test_value_list() -> None:
         SampleModel(value=[1, 2, 3])
 
 
+def test_value_list_wrong() -> None:
+    with pytest.raises(ValidationError):
+        SampleModel(value=[None, None, None])
+
+
 def test_value_tuple() -> None:
-    assert SampleModel(value=(1, 2, 3)).value == (1, 2.0, "3")
-
-
-def test_value_tuple_wrong() -> None:
     with pytest.raises(ValidationError):
-        SampleModel(value=(1, 2, 3, 4))
-
-
-def test_value_tuple_ellipsis() -> None:
-    assert SampleEllipsisModel(value=(1,)).value == (1,)
-    assert SampleEllipsisModel(value=(1, 2)).value == (1, 2)
-    assert SampleEllipsisModel(value=(1, 2, 3)).value == (1, 2, 3)
-
-
-def test_value_tuple_ellipsis_wrong() -> None:
-    with pytest.raises(ValidationError):
-        SampleEllipsisModel(value=("a",))
+        SampleModel(value=(1, 2, 3))
 
 
 def test_value_dict() -> None:
     with pytest.raises(ValidationError):
         SampleModel(value={"a": 1, "b": 2, "c": 3})
+
+
+def test_value_enum() -> None:
+    assert SampleModel(value=SampleEnum.A).value is SampleEnum.A
+
+
+def test_value_enum_key() -> None:
+    assert SampleModel(value="A").value is SampleEnum.A
+
+
+def test_value_enum_key_wrong() -> None:
+    with pytest.raises(ValidationError):
+        SampleModel(value="C")
+
+
+def test_value_enum_wrong() -> None:
+    with pytest.raises(ValidationError):
+        SampleModel(value=SampleWrongEnum.A)

@@ -42,6 +42,11 @@ def test_value_list() -> None:
     assert SampleModel(value=[1, 2, 3]).value == ["1", "2", "3"]
 
 
+def test_value_list_wrong() -> None:
+    with pytest.raises(ValidationError):
+        SampleModel(value=[None, None, None])
+
+
 def test_value_tuple() -> None:
     with pytest.raises(ValidationError):
         SampleModel(value=(1, 2, 3))
