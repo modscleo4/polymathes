@@ -1,7 +1,7 @@
 import pytest
 
-from errors import ValidationError
-from models import BaseModel
+from polymathes.errors import ValidationError
+from polymathes.models import BaseModel
 
 
 class SampleSubModel(BaseModel):
